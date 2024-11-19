@@ -1,4 +1,4 @@
-package com.mukhlisakb.newsapps.DI
+package com.mukhlisakb.newsapps.di
 
 import com.mukhlisakb.newsapps.AppViewModelFactory
 import com.mukhlisakb.newsapps.data.repositories.NewRepositoryImpl
@@ -6,6 +6,7 @@ import com.mukhlisakb.newsapps.data.source.api.NewsService
 import com.mukhlisakb.newsapps.data.source.api.RetrofitClient
 import com.mukhlisakb.newsapps.domain.repository.NewsRepository
 import com.mukhlisakb.newsapps.domain.usecase.GetTopHeadlinesUseCase
+import com.mukhlisakb.newsapps.presentation.list.NewsViewModel
 
 class AppContainer {
     private val retrofit = RetrofitClient.retrofit
@@ -19,9 +20,11 @@ class AppContainer {
         GetTopHeadlinesUseCase(newsRepository)
     }
 
-    val provideViewModelFactory(): AppViewModelFactory {
-        return AppViewModelFactory.apply {
-            // Rgeister viewmodel
+    fun provideViewModelFactory(): AppViewModelFactory {
+        return AppViewModelFactory().apply {
+            registerCreator(NewsViewModel::class.java) {
+                NewsViewModel(getTopHeadlinesuseCase)
+            }
         }
     }
 }

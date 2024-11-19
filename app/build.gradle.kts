@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -51,7 +52,7 @@ dependencies {
 
     //Glide
     implementation(libs.glide)
-    implementation(libs.glide.compiler)
+    annotationProcessor(libs.glide.compiler)
 
     //Navigation Component
 
